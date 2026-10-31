@@ -1,0 +1,385 @@
+=====================================================================
+  EXERCISE 1: BUILD A PORTFOLIO WEBSITE
+=====================================================================
+
+A portfolio is a one-page website that presents who you are, what you
+know, what you have built, and how to contact you.
+
+index.html and style.css already contain a working but plain page
+for "Yash". By the end of this exercise, the page will describe you
+and follow a complete visual design.
+
+Keep notes.txt open while you work. It explains every tag and
+property used here.
+
+RULES
+  1. Type the code yourself. Do not copy and paste.
+  2. Save after every step (Ctrl + S) and check the browser.
+  3. No AI tools for this exercise.
+
+
+---------------------------------------------------------------------
+  PART 0: SETUP
+---------------------------------------------------------------------
+
+1. A browser: Chrome or Firefox.
+2. VS Code: https://code.visualstudio.com/download
+3. Live Server extension: in VS Code press Ctrl + Shift + X
+   (Mac: Cmd + Shift + X), search "Live Server" by Ritwick Dey, and
+   click Install.
+
+
+---------------------------------------------------------------------
+  PART 1: MAKE IT YOURS
+---------------------------------------------------------------------
+
+STEP 1: Open the folder
+-----------------------
+In VS Code: File > Open Folder... and select EXERCISE-1.
+
+     EXERCISE-1/
+       assets/cat.png     placeholder photo
+       index.html         the content of the page
+       style.css          the appearance of the page
+       instructions.txt   this file
+       notes.txt          reference sheet
+
+
+STEP 2: Open the page
+---------------------
+Click "Go Live" at the bottom right of VS Code, or right-click
+index.html > "Open with Live Server". The page opens at
+http://127.0.0.1:5500/index.html and reloads on every save.
+
+Test it: change "Hi, I'm Yash." to "Hello there." in index.html and
+save.
+
+If Live Server does not start, make sure you opened the folder
+(File > Open Folder), not a single file.
+
+
+STEP 3: How HTML and CSS connect
+--------------------------------
+Inside <head> in index.html:
+
+  <link rel="stylesheet" href="style.css">
+
+This line loads style.css into the page. Change href to "nope.css",
+save, and observe the page without CSS. Then change it back.
+
+The class attribute connects an HTML element to a CSS rule:
+
+  HTML:  <section class="intro">
+  CSS:   .intro { text-align: center; }
+
+Change text-align: center; to right; inside .intro, save, and observe.
+Then change it back.
+
+
+STEP 4: Update the content
+--------------------------
+Edit index.html so it describes you:
+   - <title>, the logo, the <h1> and the line below it
+   - the About me paragraph and the skills list
+   - the email in mailto: and the GitHub link
+   - the footer
+
+Use Ctrl + H (Mac: Cmd + Option + F) to replace "Yash" everywhere.
+Leave the three project cards as they are for now.
+
+
+STEP 5: Add your image
+----------------------
+  <img src="assets/cat.png" alt="Photo of Yash" class="photo">
+
+  src = path to the image, starting from the folder of index.html
+  alt = a short description, shown if the image fails to load and
+        read by screen readers
+
+  1. Copy a photo of yourself (or an avatar) into assets/ and rename
+     it to me.jpg (or me.png). Use lowercase and no spaces.
+  2. In the intro section, change src="assets/cat.png" to
+     src="assets/me.jpg" and update the alt text.
+
+Keep cat.png on the project cards as a placeholder.
+
+Image not showing? Check that the file name, capital letters, and
+extension (.jpg / .jpeg / .png) match exactly.
+
+
+---------------------------------------------------------------------
+  PART 2: STYLE THE PAGE
+---------------------------------------------------------------------
+
+From here on you mostly edit style.css. Each step says whether to ADD
+a new rule or REPLACE an existing one.
+
+STEP 6: Colors and fonts
+------------------------
+Theme:
+     green   #4F7D32   headings and main button
+     yellow  #FFD16A   lines and photo ring
+     amber   #F5B52E   spare accent
+     red     #D9361E   name and links
+
+ADD at the very top of style.css:
+
+:root {
+  --green: #4F7D32;
+  --yellow: #FFD16A;
+  --amber: #F5B52E;
+  --red: #D9361E;
+  --cream: #FFF8EC;
+  --ink: #2B2118;
+}
+
+/* Makes width include padding and border */
+* {
+  box-sizing: border-box;
+}
+
+:root stores named colors. Use them with var(--green).
+
+ADD inside the existing body rule:
+
+  background-color: var(--cream);
+  color: var(--ink);
+
+ADD below the img rule:
+
+h1, h2, h3, .logo {
+  font-family: Georgia, serif;
+}
+
+h2 {
+  color: var(--green);
+  font-size: 32px;
+}
+
+CHECK: Cream background and green serif headings.
+
+
+STEP 7: Navbar
+--------------
+REPLACE the .navbar and .navbar a rules with:
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 3px solid var(--yellow);
+}
+
+.navbar a {
+  color: var(--ink);
+  text-decoration: none;
+  margin-left: 16px;
+}
+
+.navbar a:hover {
+  color: var(--red);
+}
+
+.navbar .logo {
+  color: var(--red);
+  font-size: 26px;
+  font-weight: bold;
+  margin-left: 0;
+}
+
+display: flex places the children in a row. space-between pushes them
+to opposite ends.
+
+CHECK: Name on the left in red, links on the right. Links turn red on
+hover.
+
+
+STEP 8: Round photo
+-------------------
+REPLACE the .photo rule with:
+
+.photo {
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 6px solid var(--yellow);
+}
+
+ADD:
+
+.intro h1 {
+  font-size: 48px;
+  margin: 16px 0 8px;
+}
+
+border-radius: 50% makes the image a circle. object-fit: cover crops
+the image instead of stretching it.
+
+
+STEP 9: Skill pills
+-------------------
+In index.html, add a <span> at the start of each skill:
+
+      <li><span class="dot green"></span>HTML</li>
+      <li><span class="dot yellow"></span>CSS</li>
+      <li><span class="dot red"></span>Git</li>
+
+class="dot green" gives one element two classes.
+
+ADD to style.css below the intro rules:
+
+.skills {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.skills li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: white;
+  border: 1px solid #e5ddd0;
+  border-radius: 999px;
+  padding: 6px 16px;
+}
+
+.dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+}
+
+.dot.green  { background-color: var(--green); }
+.dot.yellow { background-color: var(--yellow); }
+.dot.red    { background-color: var(--red); }
+
+TASK: Add a fourth skill with an amber dot. It needs a .dot.amber rule.
+
+
+STEP 10: Project cards
+----------------------
+ADD above .project:
+
+.project-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+REPLACE the .project and .project img rules with:
+
+.project {
+  flex: 1;
+  min-width: 220px;
+  background-color: white;
+  padding: 16px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.project img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+ADD:
+
+.project h3 {
+  margin-bottom: 0;
+}
+
+.project a {
+  color: var(--red);
+  font-weight: bold;
+}
+
+flex: 1 makes the cards share the row equally. min-width stops them
+from getting too narrow, so they wrap instead.
+
+CHECK: Three white cards in a row that wrap on a narrow window.
+
+
+STEP 11: Buttons
+----------------
+REPLACE the .button rule with:
+
+.button {
+  display: inline-block;
+  margin: 0 8px;
+  padding: 12px 24px;
+  background-color: var(--green);
+  color: white;
+  border: 2px solid var(--green);
+  border-radius: 999px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.button:hover {
+  background-color: var(--red);
+  border-color: var(--red);
+  color: white;
+}
+
+In index.html, add a second class to the GitHub button:
+
+    <a href="https://github.com/Yash" class="button outline">GitHub</a>
+
+ADD:
+
+.button.outline {
+  background-color: transparent;
+  color: var(--green);
+}
+
+CHECK: One filled button and one outlined button. Both turn red on
+hover.
+
+
+STEP 12: Mobile layout
+----------------------
+Open DevTools (F12) and press Ctrl + Shift + M (Mac: Cmd + Shift + M)
+to preview the page on a phone.
+
+ADD at the very end of style.css:
+
+/* Rules inside this block only apply on screens 600px wide or less */
+@media (max-width: 600px) {
+
+  .navbar {
+    flex-direction: column;
+  }
+
+  .intro h1 {
+    font-size: 34px;
+  }
+
+  .button {
+    display: block;
+    margin: 8px 0;
+  }
+}
+
+CHECK: In phone view, the name sits above the links, the cards stack
+vertically, and the buttons are full width.
+
+
+---------------------------------------------------------------------
+  TROUBLESHOOTING
+---------------------------------------------------------------------
+  [ ] The file is saved (a dot on the VS Code tab means unsaved).
+  [ ] Every opening tag has a closing tag.
+  [ ] Every CSS line ends with ; and every rule has { and }.
+  [ ] CSS uses a dot (.photo), HTML does not (class="photo").
+  [ ] Names match exactly, including capital letters.
+  [ ] No rule is pasted inside another rule.
+  [ ] Right-click > Inspect to check whether the rule is applied or
+      crossed out.
+  [ ] Still stuck? Ask a mentor.

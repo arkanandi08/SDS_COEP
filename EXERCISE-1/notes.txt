@@ -1,0 +1,243 @@
+=====================================================================
+  NOTES: HTML AND CSS ON ONE PAGE
+=====================================================================
+
+THE BIG PICTURE
+---------------
+  HTML  = what is on the page     (the bones: text, images, links)
+  CSS   = how it looks            (the clothes: colors, sizes, layout)
+  JS    = what it does            (the moves: clicks, popups, data)
+
+  The browser downloads these files and draws the page on your screen.
+  Your laptop is the "client". The computer that sends the files is
+  the "server". Live Server is a tiny server running on your laptop.
+
+
+HOW HTML AND CSS ARE LINKED
+---------------------------
+  Inside <head> of index.html:
+
+     <link rel="stylesheet" href="style.css">
+
+  rel="stylesheet"  "this file is CSS"
+  href="style.css"  "here is where to find it" (a path, see below)
+
+  The browser reads index.html, sees this line, fetches style.css,
+  and applies it. Delete the line and the page goes back to plain
+  black text on white. The content stays. Only the looks go away.
+
+  Then CSS finds HTML elements using selectors:
+
+     HTML:   <section class="intro">
+     CSS:    .intro { text-align: center; }
+
+  The class is the "name tag". The dot in CSS means "find the name tag".
+
+  3 ways to add CSS (use the first one):
+     1. Separate file with <link>          (clean, reusable)
+     2. <style> ... </style> inside <head>  (ok for tiny pages)
+     3. style="color: red" on a tag         (messy, avoid)
+
+
+ANATOMY OF A TAG
+----------------
+     <a href="#about" class="button">About me</a>
+     |  |____________________________| |______| |__|
+     |       attributes (extra info)     content   closing tag
+     opening tag
+
+  Some tags have no content and no closing tag:
+     <img>  <input>  <meta>  <link>  <br>
+
+
+TAGS YOU USED
+-------------
+  <!DOCTYPE html>   First line. Tells the browser "this is modern HTML".
+  <html>            Wraps the whole page.
+  <head>            Info ABOUT the page. Not shown on screen.
+  <meta charset>    Lets you use symbols like ₹ and letters like é.
+  <meta viewport>   Makes the page fit phone screens. Never skip it.
+  <title>           Text on the browser tab and in Google results.
+  <link>            Connects a CSS file, a font, or a tab icon.
+  <body>            Everything you can SEE goes in here.
+
+  <header>          Top area of a page (logo, nav).
+  <nav>             A group of navigation links.
+  <section>         One part of a page (About, Projects, Contact).
+  <article>         One self-contained item (one project card).
+  <div>             A plain box with no meaning. Used for grouping.
+  <footer>          Bottom area of a page.
+
+  <h1> ... <h6>     Headings. One <h1> per page, then <h2>, <h3>.
+  <p>               A paragraph of text.
+  <span>            A small piece of text you want to style (a colored dot).
+  <a href="">       A link. href="#about" jumps to id="about" on the
+                    same page. href="mailto:x@y.com" opens email.
+  <img src="" alt=""> An image. src = where it is. alt = describe it.
+  <ul> <li>         A list and its items.
+
+  <!-- ... -->      A comment. The browser ignores it.
+
+  Why <header>, <section>, <article> instead of <div> everywhere?
+  They look the same, but they tell screen readers and Google what
+  each part IS. This is called "semantic HTML".
+
+
+CLASS VS ID
+-----------
+  class="project" Can be used on MANY elements.    CSS: .project
+  id="projects"  Must be UNIQUE on the page.       CSS: #projects
+                 Also used for jump links (href="#projects").
+
+  One element can have many classes:  class="dot green"
+  CSS can target both together:       .dot.green { ... }
+
+
+ANATOMY OF A CSS RULE
+---------------------
+     .project img {
+       width: 100%;
+     }
+
+     .project img  the selector (WHO to style)
+     width         the property (WHAT to change)
+     100%          the value    (HOW MUCH)
+
+  Selectors you used:
+     body            every <body> (tag name, no dot)
+     .project        every element with class="project"
+     #projects       the element with id="projects"
+     .project img    every <img> INSIDE a .project
+     h1, h2, h3      all three (comma = "and also")
+     a:hover         a link while the mouse is on it
+     .dot.green      an element with BOTH classes dot and green
+     *               every element
+
+  If two rules fight, the more specific one wins (#id beats .class
+  beats tag). If they are equal, the one written LATER wins.
+
+
+THE BOX MODEL
+-------------
+  Every element is a box made of 4 layers:
+
+     +----------------- margin (space OUTSIDE, pushes others away)
+     |  +-------------- border
+     |  |  +----------- padding (space INSIDE, between border and text)
+     |  |  |  content
+     |  |  +-----------
+     |  +--------------
+     +-----------------
+
+  box-sizing: border-box;  makes "width" include padding and border.
+  Without it, width: 200px + padding: 20px = 240px wide. Confusing.
+  That is why we put it on * at the top.
+
+
+FLEXBOX IN 5 LINES
+------------------
+  Put display: flex on the PARENT. The children line up in a row.
+
+     display: flex;                    children in a row
+     flex-direction: column;           children in a column instead
+     justify-content: space-between;   spacing along the row
+                      (center, flex-start, flex-end, space-around)
+     align-items: center;              lines them up vertically
+     gap: 24px;                        space between children
+     flex-wrap: wrap;                  go to the next line if no room
+
+  Practice game (very fun): https://flexboxfroggy.com
+
+
+COLORS
+------
+  Same color, written 3 ways:
+     #D9361E            hex (red, green, blue in base 16)
+     rgb(217, 54, 30)   red, green, blue from 0 to 255
+     tomato             a name (only about 140 of these exist)
+
+  rgba(0, 0, 0, 0.08)  the 4th number is see-through-ness (0 to 1)
+
+  Variables: save once, reuse everywhere
+     :root   { --red: #D9361E; }
+     .logo   { color: var(--red); }
+
+  The theme in this exercise:
+     green  #4F7D32   yellow #FFD16A   amber #F5B52E   red #D9361E
+  Warm, retro, friendly vibe. Pair it with a cream background
+  and dark brown text for easy reading. Find more palettes on
+  https://coolors.co
+
+
+UNITS
+-----
+  px     fixed size. 16px is normal text.
+  %      percent of the parent. width: 100% = as wide as the parent.
+  rem    relative to the base font size. 1rem is usually 16px.
+  vw/vh  percent of the screen width / height. 100vh = full screen.
+
+
+PATHS (where files are)
+-----------------------
+  From index.html in EXERCISE-1:
+
+     style.css              same folder
+     assets/cat.png         go INTO assets, take cat.png
+     ../index.html          go UP one folder, then take index.html
+     https://...            a file on the internet
+
+  Rules that save hours:
+     - No spaces in file names. Use my-photo.jpg, not My Photo.jpg
+     - Use lowercase. Online servers treat Cat.png and cat.png as
+       different files.
+
+
+IMAGES
+------
+     <img src="assets/cat.png" alt="Photo of Yash">
+
+     .photo {
+       width: 200px;
+       height: 200px;
+       object-fit: cover;      crop instead of squash
+       border-radius: 50%;     make it a circle
+     }
+
+  .jpg   photos (small file size)
+  .png   images with transparent background, screenshots
+  .svg   drawings and icons, sharp at any size
+  .webp  modern, small, works in all current browsers
+
+  Free photos: https://unsplash.com   https://pexels.com
+
+
+DEVTOOLS: YOUR BEST FRIEND
+--------------------------
+  Right-click anything > Inspect  (or F12)
+     - Click an element to see its CSS. Click a value to edit it live.
+     - Crossed-out lines = a rule that lost the fight to another rule.
+     - Hover an element to see its margin (orange) and padding (green).
+     - Ctrl + Shift + M = phone view.
+     - The Console tab shows errors (red) when something breaks.
+  Changes in DevTools are temporary. Copy them into style.css.
+
+
+USEFUL VS CODE SHORTCUTS
+------------------------
+  !  then Enter         HTML skeleton in an empty .html file
+  .card  then Enter     makes <div class="card"></div>
+  Ctrl + /              comment / uncomment a line
+  Alt + Up / Down       move a line up or down
+  Shift + Alt + F       auto-format (fix indentation)
+  Ctrl + D              select the next same word (edit many at once)
+  (Mac: Cmd instead of Ctrl, Option instead of Alt)
+
+
+WHERE TO LOOK THINGS UP
+-----------------------
+  https://developer.mozilla.org     (MDN) the best reference. Search
+                                    "mdn <thing>" on Google.
+  https://css-tricks.com/snippets/css/a-guide-to-flexbox/
+  https://fonts.google.com          free fonts
+  https://flexboxfroggy.com         flexbox game
+  https://cssgridgarden.com         CSS grid game (next level)
